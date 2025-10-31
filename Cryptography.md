@@ -4,13 +4,6 @@ Can you get sense of this code file and write the function that will decode the 
 
 Given encrypted file:
 ```
-a = 94
-b = 29
-cipher is: [260307, 491691, 491691, 2487378, 2516301, 0, 1966764, 1879995, 1995687, 1214766, 0, 2400609, 607383, 144615, 1966764, 0, 636306, 2487378, 28923, 1793226, 694152, 780921, 173538, 173538, 491691, 173538, 751998, 1475073, 925536, 1417227, 751998, 202461, 347076, 491691]
-```
-
-Given python source code:
-```
 from random import randint
 import sys
 
@@ -53,8 +46,8 @@ def test(plain_text, text_key):
     if not is_prime(p) and not is_prime(g):
         print("Enter prime numbers")
         return
-    a = 94
-    b = 29
+    a = randint(p-10, p)
+    b = randint(g-10, g)
     print(f"a = {a}")
     print(f"b = {b}")
     u = generator(g, a, p)
@@ -119,8 +112,8 @@ def dynamic_xor_decrypt(cipher_text, text_key):
 def decrypt(cipher, text_key):
     p = 97
     g = 31
-    a = 94
-    b = 29
+    a = 95
+    b = 21
 
     u = generator(g, a, p)
     v = generator(g, b, p)
@@ -144,9 +137,9 @@ def decrypt(cipher, text_key):
 
 
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     
-    cipher = [260307, 491691, 491691, 2487378, 2516301, 0, 1966764, 1879995, 1995687, 1214766, 0, 2400609, 607383, 144615, 1966764, 0, 636306, 2487378, 28923, 1793226, 694152, 780921, 173538, 173538, 491691, 173538, 751998, 1475073, 925536, 1417227, 751998, 202461, 347076, 491691]  # <-- replace with your cipher list
+    cipher=[237915, 1850450, 1850450, 158610, 2458455, 2273410, 1744710, 1744710, 1797580, 1110270, 0, 2194105, 555135, 132175, 1797580, 0, 581570, 2273410, 26435, 1638970, 634440, 713745, 158610, 158610, 449395, 158610, 687310, 1348185, 845920, 1295315, 687310, 185045, 317220, 449395]
     text_key = "trudeau"
     plaintext = decrypt(cipher, text_key)
     print(f"Flag: {plaintext}")
@@ -155,7 +148,7 @@ if __name__ == "__main__":
 ## Flag:
 
 ```
-picoCTF{custom_d2cr0pt6d_751a22dc}
+picoCTF{custom_d2cr0pt6d_66778b34}
 ```
 
 ## Concepts learnt:
@@ -286,7 +279,7 @@ Python code to get password:
 ```
 from subprocess import run, PIPE  
   
-c = 1765037049764047724348114634473658734830490852066061345686916365658618194981097216750929421734812911680434647401939068526285652985802740837961814227312100
+c = 2575135950983117315234568522857995277662113128076071837763492069763989760018604733813265929772245292223046288098298720343542517375538185662305577375746934
   
   
 print(f"c = {c}\n")  
@@ -316,7 +309,7 @@ print("-" * 50)
 ```
 Code terminal: 
 ```
-c = 1765037049764047724348114634473658734830490852066061345686916365658618194981097216750929421734812911680434647401939068526285652985802740837961814227312100
+c = 2575135950983117315234568522857995277662113128076071837763492069763989760018604733813265929772245292223046288098298720343542517375538185662305577375746934
 
 Enter message (m1): a
 Have the oracle encrypt this message (m1): a
@@ -333,7 +326,7 @@ Password (m = m2 / m1): 881d9
 ```
 Ubuntu terminal for exploiting Oracle and getting flag:
 ```
-saltycoder@LAPTOP-LP81GQQE:~$ nc titan.picoctf.net 55043
+ayush@LAPTOP-FR2LS0D1:~$ nc titan.picoctf.net 51600
 *****************************************
 ****************THE ORACLE***************
 *****************************************
@@ -350,24 +343,26 @@ ciphertext (m ^ e mod n) 1894792376935242028465556366618011019548511575881945413
 what should we do for you?
 E --> encrypt D --> decrypt.
 D
-Enter text to decrypt: 3344378746901187057733146330417154614967897092097381232820769771567582019249609372563765215104944867176199885929270022282129502059626996351942254590865021586025981355523819624411257309507460128244944233368442952118580893027261393807751298523497094518989597199047515930901371746729140121027277016789387650600
-decrypted ciphertext as hex (c ^ d mod n): 154d4ab6f999
-decrypted ciphertext: MJ¶ù
+Enter text to decrypt: 4879347969494695763992079257309920962956235340071608197771324952441750870022564003875958517877187374665821306399293178559399723408243829615035132429286786526803773011124941819240588649086684776588479763949051499637834997128787647253068836995761445652838138074231225267441000841604830001446657688224597433724
+decrypted ciphertext as hex (c ^ d mod n): 1305d947a822
+decrypted ciphertext: ÙG¨"
 
 what should we do for you?
 E --> encrypt D --> decrypt.
 ^C
-//We got the password by here. 
-saltycoder@LAPTOP-LP81GQQE:/mnt/d/temp$ openssl enc -aes-256-cbc -d -in secret.enc -k 881d9
+ayush@LAPTOP-FR2LS0D1:~$ cd /mnt/C/Users/Ayush/Downloads
+-bash: cd: /mnt/C/Users/Ayush/Downloads: No such file or directory
+ayush@LAPTOP-FR2LS0D1:~$ cd /mnt/c/Users/Ayush/Downloads
+ayush@LAPTOP-FR2LS0D1:/mnt/c/Users/Ayush/Downloads$ openssl enc -aes-256-cbc -d -in secret.enc -k 24bcb
 *** WARNING : deprecated key derivation used.
 Using -iter or -pbkdf2 would be better.
-picoCTF{su((3ss_(r@ck1ng_r3@_881d93b6}
+picoCTF{su((3ss_(r@ck1ng_r3@_24bcbc66}
 ```
 
 ## Flag:
 
 ```
-picoCTF{su((3ss_(r@ck1ng_r3@_881d93b6}
+picoCTF{su((3ss_(r@ck1ng_r3@_24bcbc66}
 ```
 
 ## Concepts learnt:
