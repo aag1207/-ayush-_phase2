@@ -7,7 +7,6 @@ Hint: What are some other ways to hide data?
 ## Solution:
 
 - They gave a .pcapng file. So We have to first keep that file in Wireshark, then filter the protocol to tftp. I thought of this because the chalenge name is that.
-![wireshark](images/trivial1.png)
 - Then I followed a few of the networks and found somethings which had files with some text. I exported all the objects and saved them on my local disk. There were 2 text files, 3 images, and 1 deb file.
 - I opened the instructions text file and there was a cipher, which looked like the caeser cipher. I used cyberchef to decode the cipher:
 
@@ -61,6 +60,38 @@ https://cyberchef.org/
 
 https://www.geeksforgeeks.org/computer-networks/what-is-tftp-trivial-file-transfer-protocol/
 
+# 2. tunn3l v1s10n:
+
+We found this file. Recover the flag
+
+## Solution:
+
+- I first opened the file in notepad, but it was messed up. I then tried different things and none of them worked
+- I then opened it in a Hex editor, and it had a BM at the start, so it is a bmp file. I first tried adding .bmp extension to the file, but it didnt work.
+- I then searched and found that the file might be corrupt. So I compared it with another proper bmp file and looked up the file format for BMP file, and changed the size of the infoheader from "BA D0 00 00", which is 53434 bytes to "28 00 00 00", which is 40 bytes, and how it should be. Then i opened the file and got this
+
+- The image wasn't fully visible, it was like cropped, so I thought maybe the size of the image, its height or width need to be changed. Width is at an offset of 18 bytes, and 4 bytes are specified for width. I first tried changing the width to different values, but none of them worked. So I decided to change the height, height is at an offset of 22 bytes, and 4 bytes are specified for height. I changed it to around 800 pixels which is "32 03 00 00" in the hex editor,from around 300 pixels, which is "32 01 00 00" in hex editor.
+
+- After changing the height, I opened the file and it had the flag
+
+
+
+## Flag:
+
+```
+picoCTF{qu1t3_a_v13w_2020}
+```
+
+## Concepts learnt:
+
+- I learnt about Hex files, and the basic format for bmp files in the hex editor. I learnt how we can use the hex editor and fix corrupted files. 
+
+
+## Resources:
+
+- https://www.ece.ualberta.ca/~elliott/ee552/studentAppNotes/2003_w/misc/bmp_file_format/bmp_file_format.htm
+- https://hexed.it/
+
 
 # 3. m00nwalk
 
@@ -90,4 +121,3 @@ picoCTF{beep_boop_im_in_space}
 
 - play.picoctf.org
 
-# 2. 
