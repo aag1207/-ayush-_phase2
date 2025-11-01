@@ -13,7 +13,7 @@ To solve this challenge, I first had to convert 30478191278 into binary to solve
 ## Flag:
 
 ```
-nite{10001111000}
+nite{100010011000}
 ```
 
 ## Concepts learnt:
